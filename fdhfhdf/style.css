@@ -1,0 +1,65 @@
+img{
+    width: 24px;
+    height: 16px;
+}
+.priority{
+    padding: 1px;
+    text-align: center;
+}
+.conteiner{
+    padding: 1px;
+    text-align: center;
+}
+TABLE {
+    margin: auto;
+    border-collapse: collapse; /* Убираем двойные линии между ячейками */
+    border: 2px solid white; /* Прячем рамку вокруг таблицы */
+}
+TD, TH {
+    padding: 3px; /* Поля вокруг содержимого таблицы */
+    border: 1px solid maroon; /* Параметры рамки */
+    text-align: left; /* Выравнивание по левому краю */
+}
+
+.mainmenubtn {
+    background-color: whitesmoke;
+    color: lightslategrey;
+    border-radius: 40px;
+    cursor: pointer;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.mainmenubtn:hover {
+    background-color: honeydew;
+}
+
+.filterDown{
+    text-align: center;
+    border: 1px solid black;
+    padding: 1px;
+}
+.filterDown:hover{
+    background-color: honeydew;
+}
+.dropdown {
+    position: relative;
+    width: 20%;
+    left: 46%;
+    display: inline-block;
+}
+.dropdown-child {
+    display: none;
+    background-color:silver;
+    border-radius:10px;
+    min-width: 200px;
+}
+.dropdown-child a {
+    color: white;
+    padding: 20px;
+    text-decoration: none;
+    display: block;
+}
+.dropdown:hover .dropdown-child {
+    display: block;
+}
