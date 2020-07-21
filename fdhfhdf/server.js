@@ -24,26 +24,7 @@ function checkDate(data) {
    // console.log(data.created+'  now date:'+ new Date())
 }
 
-function checkSrcByIssueType(type) {
-if(type==="Эпик"){
-    return 'https://tester231.atlassian.net/images/icons/issuetypes/epic.svg'
-}
-if(type==="История"){
-    return 'https://tester231.atlassian.net/secure/viewavatar?size=medium&avatarId=10315&avatarType=issuetype'
-}
-if(type==="Баг"){
-    return 'https://tester231.atlassian.net/secure/viewavatar?size=medium&avatarId=10303&avatarType=issuetype'
-}
-if(type==="Подзадача"){
-    return 'https://tester231.atlassian.net/secure/viewavatar?size=medium&avatarId=10316&avatarType=issuetype'
-}
-if(type==="Задача"){
-    return 'https://tester231.atlassian.net/secure/viewavatar?size=medium&avatarId=10318&avatarType=issuetype'
-}
-else {
-    return 'https://png.pngtree.com/png-clipart/20190516/original/pngtree-vector-question-mark-icon-png-image_4268653.jpg'
-}
-}
+
 function renderDefaultInformation(req,res,project=null){
 
     jira.getAllUser().then(data=> {
@@ -64,7 +45,7 @@ function renderDefaultInformation(req,res,project=null){
            users.map(dataUs=>{
                data.map(data_=>{
                    if(data_.reporter.displayName===dataUs.nameDispl&&data_.reporter.accountId===dataUs.acountId){
-                       endData.userAction.push({UserName:data_.assignee.displayName,status:data_.status.name,priority:data_.priority.name,type:data_.issuetype.name,srcType:checkSrcByIssueType(data_.issuetype.name),dayLate5:checkDate(data_)})
+                       endData.userAction.push({UserName:data_.assignee.displayName,status:data_.status.name,priority:data_.priority.name,type:data_.issuetype.name,srcType:data_.issuetype.iconUrl,dayLate5:checkDate(data_)})
 
                    }
                        })
@@ -114,6 +95,6 @@ app.get('/giveMeCss',(req,res)=>{
 app.get('/getDefaultInformation',(req,res)=>{
     renderDefaultInformation(res,res)
 })
-app.listen(8080, function () {
-    console.log('Example app listening on port 8080!');
+app.listen(8280, function () {
+  //  console.log(app.port);
 });

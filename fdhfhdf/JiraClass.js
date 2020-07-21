@@ -26,8 +26,7 @@ buff=[]
    async getAllIssues(data=null){
     this.buff=[];
     let a;
-
-        a= await  this.jira.search.search({
+            a= await  this.jira.search.search({
             jql:'project="PP231"'
         }).then(data=>{
             for(let i =0;i<data.issues.length;i++){
@@ -43,5 +42,8 @@ buff=[]
        return a;
     }
 }
-//let a= new JiraOperation()
+let a= new JiraOperation()
+/*a.getAllIssues().then(data=>{
+    console.log(data[0]);
+})*/
 module.exports= {JiraOperation};
