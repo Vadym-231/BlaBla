@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="giveMeCss">
+</head>
+<body>
+<div class="dropdown">
+    <button class="mainmenubtn">Filter issues by</button>
+    <div class="dropdown-child">
+        <p class="filterDown" onclick="setDefault()"/>Default</p>
+        <p class="filterDown" onclick="setPriority()"/>By priority</p>
+
+    </div>
+</div>
+<table border="1" class="table">
+    <caption>Тз</caption>
+    <tr>
+        <th></th>
+        <th></th>
+        <th>Беклог</th>
+        <th>Вибрано для розр</th>
+        <th>В роботі</th>
+        <th>Готово</th>
+    </tr>
+    <tr><td>Користувачі</td><td>type</td><td class="conteiner">
+        <img src="https://tester231.atlassian.net/images/icons/priorities/lowest.svg">
+        <img src="https://tester231.atlassian.net/images/icons/priorities/low.svg">
+        <img src="https://tester231.atlassian.net/images/icons/priorities/medium.svg">
+        <img src="https://tester231.atlassian.net/images/icons/priorities/highest.svg">
+        
+    </td><td class="conteiner">
+        <img src="https://tester231.atlassian.net/images/icons/priorities/lowest.svg">
+        <img src="https://tester231.atlassian.net/images/icons/priorities/low.svg">
+        <img src="https://tester231.atlassian.net/images/icons/priorities/medium.svg">
+        <img src="https://tester231.atlassian.net/images/icons/priorities/highest.svg">
+
+    </td>
+        <td class="conteiner" >
+            <img  src="https://tester231.atlassian.net/images/icons/priorities/lowest.svg">
+            <img  src="https://tester231.atlassian.net/images/icons/priorities/low.svg">
+            <img  src="https://tester231.atlassian.net/images/icons/priorities/medium.svg">
+            <img  src="https://tester231.atlassian.net/images/icons/priorities/highest.svg">
+
+        <td class="conteiner">
+        <img src="https://tester231.atlassian.net/images/icons/priorities/lowest.svg">
+        <img src="https://tester231.atlassian.net/images/icons/priorities/low.svg">
+        <img src="https://tester231.atlassian.net/images/icons/priorities/medium.svg">
+        <img src="https://tester231.atlassian.net/images/icons/priorities/highest.svg">
+
+    </td></tr>
+</table>
+<script>
+   let doc= document;
+   const arrStatus=["Backlog", "Selected for Development" ,"В работе", "Готово"]
+   let priorityConteiner =doc.getElementsByClassName('conteiner')
+   let parrent = document.getElementsByTagName('tbody')
+   let arrPriority=[]//["Lowest", "Low", "Medium", "Highest"];
+   let sortType='default';//priority
+   var arrType=[]
+   function createUserField(data) {
+       let   buf = doc.createElement('tr');
+       let  buf2= doc.createElement('td');
+       buf2.appendChild(doc.createTextNode(data.nameDispl))
+       buf.appendChild(buf2);
+       return buf
+   }
+   function makeImgeBySrc(SRC) {
+       let tr= doc.createElement('tr')
+       let td= doc.createElement('td')
+       let img_ = doc.createElement('img')
+       img_.src=SRC;
+       td.appendChild(img_)
+       tr.appendChild(td);
+       return tr
+   }
+   function checkSrc(name) {
+       for(let i =0;i<arrType.length;i++){
+           if(name===arrType[i]){
+               return true
+           }
+       }
+       return false;
+   }
+   function createIcoField(data) {
+       arrType=[]
+       let table = doc.createElement('table')
+       let td = doc.createElement('td')
+       console.log('data')
+       data.userAction.map(data=>{
+           if(!checkSrc(data.type)){
+               arrType.push(data.type);
+               table.appendChild(makeImgeBySrc(data.srcType))
+           }
+       })
+       td.appendChild(table)
+       return td
+
+   }
+   function check(data,type,priority,status,user) {
+       let j=0;
+       for(let i=0;i<data.length;i++){
+
+           if(data[i].type===type&&data[i].priority===priority&&data[i].status===status&&data[i].UserName===user){
+               j=j+1
+           }
+
+       }
+       if(j>0){
+           return j.toString()
+       }
+       else {
+           return "-"
+       }
+   }
+   function setDefault(){
+       sortType='default'
+       fetchDefault()
+   }
+   function setPriority() {
+       sortType='priority'
+       fetchDefault()
+   }
+   function checkColor(data) {
+
+       let j='';
+       for(let i=0;i<data.length;i++){
+           if(data[i].dayLate5==='yellow') {
+           return  'yellow'
+
+           }
+           if(data[i].dayLate5==="red"){
+               j='red';
+           }
+
+       }
+       if(j==='red'){
+           return j.toString()
+       }
+       else {
+           return "white"
+       }
+   }
+
+   function sdgasd(data,stutus,user){
+       let td = doc.createElement('td');
+       let table = doc.createElement('table')
+       for(let i = 0;i<5;i++){
+           let buf = doc.createElement('tr');
+           for(let j = 0;j<4;j++){
+               let buff2= doc.createElement('td')
+               buf.appendChild(buff2)
+           }
+          table.appendChild(buf)
+
+       }
+       for(let i = 0;i<5;i++){
+           for(let j = 0;j<4;j++){
+               let a =check(data,arrType[i],arrPriority[j],stutus,user);
+               table.childNodes[i].childNodes[j].appendChild(doc.createTextNode(a))
+               if(a!=='-') {
+                  table.childNodes[i].childNodes[j].style.backgroundColor=checkColor(data)
+               }
+           }
+       }
+       table.border='1'
+       table.style.width='100%';
+       table.style.height='100%';
+       td.appendChild(table)
+       return td;
+
+   }
+   function renderPriorityBlock() {
+
+       for(let i =0;i<priorityConteiner.length;i++){
+           for(let  j=0;j<priorityConteiner[i].children.length;j++){
+               priorityConteiner[i].children[j].style.display='none'
+           }
+       }
+       for(let i =0;i<priorityConteiner.length;i++){
+           for(let  j=0;j<arrPriority.length;j++){
+               let img = doc.createElement('img');
+               img.src='https://tester231.atlassian.net/images/icons/priorities/'+arrPriority[j].toLowerCase()+'.svg'
+               priorityConteiner[i].appendChild(img);
+           }
+       }
+      /* for(let i =0;i<arrPriority.length;i++){
+           let img = doc.createElement('img');
+           img.src='https://tester231.atlassian.net/images/icons/priorities/'+arrPriority[i].toLowerCase()+'.svg'
+           priorityConteiner.appendChild(img);
+       }*/
+   }
+   function sort(){
+       if(sortType==='priority'){
+            arrPriority=["Lowest", "Low", "Medium", "Highest"].reverse();
+
+       }
+       else {
+           arrPriority=["Lowest", "Low", "Medium", "Highest"];
+       }
+       renderPriorityBlock()
+   }
+let i='';
+   function render(data){
+        for(let i=0;i<data.users.length;i++){
+           sort()
+           let table_= createUserField(data.users[i]);
+           table_.className='New'
+            table_.appendChild(createIcoField(data))
+            for(let j =0;j<arrStatus.length;j++){
+                table_.appendChild( sdgasd(data.userAction,arrStatus[j],data.users[i].nameDispl))
+            }
+            parrent[0].appendChild(table_)
+       }
+
+
+
+
+    }
+    function goNext() {
+        fetch('getDefaultInformation').then(data => {
+
+            if (data.ok) {
+                return data.json()
+            }
+        }).then(data => {
+            render(data)
+            //console.log(data)
+        })
+    }
+    function fetchDefault() {
+       if(i==='stop') {
+           let a=doc.getElementsByClassName('New')
+           for(let i=0;i<a.length;i++){
+               a[i].style.display='none'
+           }
+       goNext()
+
+       }else {
+           i = 'stop'
+           goNext()
+       }
+
+
+
+   }
+
+
+   fetchDefault()
+</script>
+</body>
+</html>
