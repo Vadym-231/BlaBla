@@ -2,7 +2,7 @@ const server = require('express');
 const fs = require('fs');
 const {JiraOperation} = require('./JiraClass')
 const {sql} = require( './mySqlClass')
-
+const path =require('path')
 
 const app = server()
 const mySql =new sql('127.0.0.1','root','root','test');
@@ -81,7 +81,7 @@ function htmlOrCss(res,PathStr,type){
 }
 
 app.get('/',(req,res)=>{
-    htmlOrCss(res,__dirname+'/index.html','text/html').pipe(res)
+    htmlOrCss(res,path.join(__dirname,'index.html'),'text/html').pipe(res)
 })
 app.get('/getDataByFilter=:project',(req,res)=>{
     renderDefaultInformation(res,res,req.params.project)
@@ -90,7 +90,7 @@ app.get('/getAllProjectName',(req,res)=>{
     getProject(req,res)
 })
 app.get('/giveMeCss',(req,res)=>{
-    htmlOrCss(res,__dirname+'/style.css','text/css').pipe(res)
+    htmlOrCss(res,path.join(__dirname,'style.css'),'text/css').pipe(res)
 })
 app.get('/getDefaultInformation',(req,res)=>{
     renderDefaultInformation(res,res)
