@@ -12,7 +12,7 @@
   "dependencies": {
     "express": "^4.17.1",
     "jira-client": "^6.17.0",
-    "node-fetch": "^2.6.0"
+    "node-fetch": "^2.6.1"
   },
   "devDependencies": {
     "jira-connector": "^3.1.0",
